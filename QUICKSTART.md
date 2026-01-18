@@ -1,19 +1,27 @@
-# 快速使用指南
+# 快速使用指南 (HTTP 请求版)
 
 ## 🚀 5分钟快速上手
 
 ### 步骤1: 设置API密钥
 
 ```bash
-export GEMINI_API_KEY='your-google-ai-api-key'
+# 创建 .env 文件
+cp .env.example .env
+
+# 编辑 .env 文件，填入密钥
+GEMINI_API_KEY=your-gemini-api-key
+GEMINI_BASE_URL=https://your-relay-url-here
+GEMINI_MODEL=gemini-3-pro-image-preview
 ```
 
-**获取API密钥**: 访问 [Google AI Studio](https://makersuite.google.com/app/apikey)
+**获取API密钥**: 访问 [Google AI Studio](https://aistudio.google.com/apikey)
+
+**使用第三方中转**: 如果需要使用中转服务，将 `GEMINI_BASE_URL` 设置为中转服务商提供的地址
 
 ### 步骤2: 安装依赖
 
 ```bash
-pip install google-genai pillow
+pip install httpx pillow python-dotenv
 ```
 
 ### 步骤3: 准备文档
@@ -183,10 +191,19 @@ echo "所有版本生成完成！"
 ### Q: 生成失败怎么办？
 
 A: 检查以下几点：
-1. API密钥是否正确设置
-2. 网络连接是否正常
-3. Python依赖是否完整安装
-4. 查看详细错误信息
+1. `.env` 文件中 GEMINI_API_KEY 是否正确设置
+2. GEMINI_BASE_URL 是否正确（如使用中转服务）
+3. 网络连接是否正常
+4. Python依赖是否完整安装（特别是 httpx）
+5. 查看详细错误信息
+
+### Q: 如何配置第三方中转服务？
+
+A: 在 `.env` 文件中设置：
+```bash
+GEMINI_BASE_URL=https://your-relay-provider.com
+```
+本版本使用 httpx 直接发送 HTTP 请求，通过 `x-goog-api-key` 请求头传递 API Key。
 
 ### Q: 可以生成中文内容吗？
 
